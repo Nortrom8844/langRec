@@ -24,7 +24,7 @@ def downloadVideo(link):
 
 def convertToAudio(fileName):
     clip = mp.AudioFileClip(fileName+".mp4")
-    if (clip.duration > 20)
+    if (clip.duration > 20):
         clip = clip.cutout(0, 20)
     
     clip.write_audiofile("audio.mp3")

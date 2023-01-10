@@ -20,10 +20,10 @@ if (st.button("recognize")):
         
         if (audioName != None):
             st.info("Recognizing language", icon=None)
-            lang = lr.recLang(audioName)
+            lang = lr.recLang("audio.mp3")
             st.markdown("<h2 style='text-align: center; color = green;'>Language recognized: "+lang+".</h2>", unsafe_allow_html=True)
             
-            file=pathlib.Path(audioName+".mp3")
+            file=pathlib.Path("audio.mp3")
             file.unlink()
 
             file=pathlib.Path(videoName+".mp4")

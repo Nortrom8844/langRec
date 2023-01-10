@@ -23,7 +23,7 @@ def downloadVideo(link):
         #return None
 
 def convertToAudio(fileName):
-    clip = mp.AudioFileClip(fileName+".mp4")
+    clip = mp.AudioFileClip(fileName+".mp4").cutout(0, 20)
     
     clip.write_audiofile("audio.mp3")
     clip.close()

@@ -5,7 +5,7 @@ import moviepy.editor as mp
 import torchaudio
 #import pycountry
 from speechbrain.pretrained import EncoderClassifier
-
+import os
 
 
 def downloadVideo(link):
@@ -15,25 +15,25 @@ def downloadVideo(link):
         return None
     #if (yt):
     else:
-        #t = yt.get('mp4')
-        t = yt.streams.filter(only_audio=True).all()
-        t[0].download()
+        t = yt.streams.filter(file_extension = "mp4", only_audio=True).all()
+        t[0].download(filename = "video.mp4")
         return yt.title
    # else:
         #return None
 
 def convertToAudio(fileName):
-    clip = mp.AudioFileClip(fileName+".mp4")
-    clip.write_audiofile(fileName+".mp3")
+    clip = mp.AudioFileClip("video.mp4")
+    if  (clip.duration > 20):
+         clip = clip.cutout(0, 20)
+
+    clip.write_audiofile("audio.mp3")
     clip.close()
     return fileName
 
 def recLang(fileName):
-    import torchaudio
-    from speechbrain.pretrained import EncoderClassifier
     language_id = EncoderClassifier.from_hparams(source="speechbrain/lang-id-voxlingua107-ecapa", savedir="tmp")
 
-    signal = language_id.load_audio(fileName+".mp3")
+    signal = language_id.load_audio("audio.mp3")
     prediction =  language_id.classify_batch(signal)
 
     #print(prediction[3])

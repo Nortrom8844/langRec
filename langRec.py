@@ -24,7 +24,7 @@ def downloadVideo(link):
 
 def convertToAudio(fileName):
     clip = mp.AudioFileClip(fileName+".mp4")
-    clip.write_audiofile(fileName+".mp3")
+    clip.write_audiofile("audio.mp3")
     clip.close()
     return fileName
 
@@ -33,7 +33,7 @@ def recLang(fileName):
     from speechbrain.pretrained import EncoderClassifier
     language_id = EncoderClassifier.from_hparams(source="speechbrain/lang-id-voxlingua107-ecapa", savedir="tmp")
 
-    signal = language_id.load_audio(fileName+".mp3")
+    signal = language_id.load_audio("audio.mp3")
     prediction =  language_id.classify_batch(signal)
 
     #print(prediction[3])
